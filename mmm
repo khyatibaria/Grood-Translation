@@ -1,0 +1,25 @@
+
+var btnTranslate=document.querySelector("#btnTranslate");
+var inputField= document.querySelector('#input-field');
+var OutputDiv = document.querySelector('#outputDiv')
+
+
+var API_URL="https://api.funtranslations.com/translate/yoda.json"
+
+function ClickEventHandler(){
+    var inputText = inputField.value
+    callUrl= API_URL + "?" + "text=" + inputText
+    fetch(callUrl)
+    .then(response => response.json())
+    .then(json => GetOutputInDiv(json))
+    .catch(ExcetptionHandler)
+}
+function ExcetptionHandler(){
+    console.log("Hourly Limit Reached !!")
+    OutputDiv.innerText="Hourly Limit Reached !!"
+}
+function GetOutputInDiv(json){
+    console.log(json)
+    OutputDiv.innerHTML=json.contents.translated
+}
+btnTranslate.addEventListener('click',ClickEventHandler)
